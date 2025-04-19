@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyodide For Loop Example</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+</head>
+
+<body>
+
+    <h1>Pyodide Example: Print Numbers Using Python</h1>
+    <button onclick="runPython()">Run Python Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        // Initialize Pyodide when the page loads
+        async function loadPyodideInstance() {
+            window.pyodide = await loadPyodide();
+            console.log("Pyodide is ready");
+        }
+
+        loadPyodideInstance();
+
+        // Function to run Python code
+        async function runPython() {
+            const pythonCode = `
+output = ""
+for i in range(1, 11):
+    output += str(i) + "\\n"
+output
+            `;
+
+            try {
+                const result = await pyodide.runPythonAsync(pythonCode);
+                document.getElementById("output").textContent = result;
+            } catch (error) {
+                document.getElementById("output").textContent = `Error: ${error}`;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
